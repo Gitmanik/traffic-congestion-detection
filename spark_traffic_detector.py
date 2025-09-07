@@ -55,6 +55,7 @@ class TrafficCongestionDetector:
             # Make sure the module is visible in both driver & executors too
             .config("spark.driver.extraJavaOptions", "--add-modules=jdk.management")
             .config("spark.executor.extraJavaOptions", "--add-modules=jdk.management")
+            .config("spark.sql.legacy.timeParserPolicy", "LEGACY")
         )
         self.spark = builder.getOrCreate()
         self.spark.sparkContext.setLogLevel("WARN")
