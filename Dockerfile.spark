@@ -1,0 +1,33 @@
+FROM eclipse-temurin:17-jdk-jammy
+
+# Install Python and system dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-dev \
+    gcc \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create symbolic link for python
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+WORKDIR /app
+
+# Copy requirements and install Python dependencies
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy Spark detector scripts
+COPY spark_traffic_detector.py .
+
+# Create directories for Spark
+RUN mkdir -p /app/checkpoint /app/spark-warehouse
+RUN chmod 777 /app/checkpoint /app/spark-warehouse
+
+# Create a non-root user
+RUN useradd -m -u 1000 sparkuser && chown -R sparkuser:sparkuser /app
+USER sparkuser
+
+# Default command runs the basic detector
+CMD ["python", "spark_traffic_detector.py"]

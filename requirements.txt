@@ -1,0 +1,19 @@
+# Kafka Dependencies
+kafka-python==2.0.2
+confluent-kafka==2.3.0
+
+# Spark Dependencies  
+pyspark==3.5.0
+py4j==0.10.9.7
+
+# Data Processing
+pandas>=1.5.0
+numpy>=1.21.0
+
+# Utilities
+python-dateutil>=2.8.0
+pytz>=2022.1
+
+# Optional: For enhanced monitoring
+matplotlib>=3.5.0
+seaborn>=0.11.0
